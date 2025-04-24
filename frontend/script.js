@@ -17,7 +17,7 @@ document
 
             // Send to backend for screenshot generation
             const response = await fetch(
-                "http://localhost:3000/api/screenshot",
+                "https://intern-fs.onrender.com/api/screenshot",
                 {
                     method: "POST",
                     headers: {
