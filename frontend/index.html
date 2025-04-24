@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Change Infographic</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="infographic" id="infographic">
+            <header>
+                <h1>CLIMATE CHANGE</h1>
+                <p class="subtitle">The Global Challenge of Our Time</p>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card temperature">
+                    <div class="stat-value">+1.1°C</div>
+                    <div class="stat-label">Global temperature rise since 1880</div>
+                </div>
+                <div class="stat-card co2">
+                    <div class="stat-value">419 ppm</div>
+                    <div class="stat-label">Atmospheric CO₂ concentration</div>
+                </div>
+                <div class="stat-card ice">
+                    <div class="stat-value">-13%</div>
+                    <div class="stat-label">Arctic ice loss per decade</div>
+                </div>
+                <div class="stat-card sea">
+                    <div class="stat-value">+3.7 mm/yr</div>
+                    <div class="stat-label">Sea level rise rate</div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="content-left">
+                    <h2>Primary Causes</h2>
+                    <div class="causes">
+                        <div class="cause">
+                            <div class="cause-icon">🏭</div>
+                            <div class="cause-text">
+                                <div class="cause-title">Fossil Fuels</div>
+                                <div class="cause-desc">Burning coal, oil, and gas</div>
+                            </div>
+                        </div>
+                        <div class="cause">
+                            <div class="cause-icon">🌲</div>
+                            <div class="cause-text">
+                                <div class="cause-title">Deforestation</div>
+                                <div class="cause-desc">Reduced carbon absorption</div>
+                            </div>
+                        </div>
+                        <div class="cause">
+                            <div class="cause-icon">🏗️</div>
+                            <div class="cause-text">
+                                <div class="cause-title">Industrialization</div>
+                                <div class="cause-desc">Increased manufacturing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-right">
+                    <h2>Projected Impacts</h2>
+                    <div class="impacts">
+                        <div class="impact">
+                            <div class="impact-bar" style="--value: 85%; background: #FF6B6B;"></div>
+                            <div class="impact-label">Extreme Weather Events</div>
+                        </div>
+                        <div class="impact">
+                            <div class="impact-bar" style="--value: 70%; background: #4ECDC4;"></div>
+                            <div class="impact-label">Species Extinction</div>
+                        </div>
+                        <div class="impact">
+                            <div class="impact-bar" style="--value: 90%; background: #45AAF2;"></div>
+                            <div class="impact-label">Sea Level Rise</div>
+                        </div>
+                        <div class="impact">
+                            <div class="impact-bar" style="--value: 60%; background: #A55EEA;"></div>
+                            <div class="impact-label">Food Insecurity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">⚠️</div>
+                <div class="callout-text">
+                    Without immediate action, global temperatures could rise by 4°C by 2100, with catastrophic consequences.
+                </div>
+            </div>
+
+            <footer>
+                <div class="sources">Data sources: NASA, IPCC, NOAA</div>
+                <div class="logo">ClimateAction.org</div>
+            </footer>
+        </div>
+
+        <button id="screenshot-btn">Download Infographic</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
