@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium");
 
 router.post("/", async (req, res) => {
     let browser = null;
@@ -22,26 +23,11 @@ router.post("/", async (req, res) => {
             </html>
         `;
 
-        // For Render.com - use their Chromium path
-        // For local development, you'll need to specify your Chrome path
-        const executablePath = process.env.RENDER
-            ? "/opt/render/.cache/chromium/chrome"
-            : "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-
         // Launch browser
         browser = await puppeteer.launch({
-            executablePath: executablePath,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-accelerated-2d-canvas",
-                "--no-first-run",
-                "--no-zygote",
-                "--single-process",
-                "--disable-gpu",
-            ],
-            headless: "new",
+            args: chromium.args,
+            executablePath: await chromium.executablePath(),
+            headless: chromium.headless,
             defaultViewport: {
                 width: 1200,
                 height: 1600,
@@ -72,9 +58,7 @@ router.post("/", async (req, res) => {
         res.status(500).json({
             error: "Failed to generate screenshot",
             details: error.message,
-            suggestion: process.env.RENDER
-                ? "Ensure Chromium is available at /opt/render/.cache/chromium/chrome"
-                : "Make sure Chrome is installed at default location",
+            suggestion: "Please try again later",
         });
     } finally {
         if (browser) {
