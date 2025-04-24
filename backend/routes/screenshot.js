@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const puppeteer = require("puppeteer-core");
-const os = require("os");
 
 router.post("/", async (req, res) => {
-    let browser;
+    let browser = null;
     try {
         const { html, css } = req.body;
 
@@ -15,6 +14,7 @@ router.post("/", async (req, res) => {
                 <style>${css}</style>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
             </head>
             <body>
                 ${html}
@@ -22,23 +22,13 @@ router.post("/", async (req, res) => {
             </html>
         `;
 
-        // Determine the correct Chromium/Chrome path based on OS
-        let executablePath;
-        if (os.platform() === "win32") {
-            // Windows paths - adjust these based on where Chrome is installed
-            executablePath =
-                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" ||
-                "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
-        } else {
-            // Linux/Mac paths (for when you deploy)
-            executablePath =
-                process.env.CHROMIUM_PATH ||
-                "/usr/bin/chromium-browser" ||
-                "/usr/bin/chromium" ||
-                "/usr/bin/google-chrome";
-        }
+        // For Render.com - use their Chromium path
+        // For local development, you'll need to specify your Chrome path
+        const executablePath = process.env.RENDER
+            ? "/opt/render/.cache/chromium/chrome"
+            : "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
-        // Launch Puppeteer
+        // Launch browser
         browser = await puppeteer.launch({
             executablePath: executablePath,
             args: [
@@ -52,12 +42,18 @@ router.post("/", async (req, res) => {
                 "--disable-gpu",
             ],
             headless: "new",
+            defaultViewport: {
+                width: 1200,
+                height: 1600,
+                deviceScaleFactor: 2,
+            },
         });
 
         const page = await browser.newPage();
         await page.setContent(fullHtml, { waitUntil: "networkidle0" });
         await page.waitForTimeout(500);
 
+        // Take screenshot
         const screenshot = await page.screenshot({
             type: "png",
             fullPage: true,
@@ -68,7 +64,7 @@ router.post("/", async (req, res) => {
         res.set("Content-Type", "image/png");
         res.set(
             "Content-Disposition",
-            'attachment; filename="infographic.png"'
+            'attachment; filename="climate-infographic.png"'
         );
         res.send(screenshot);
     } catch (error) {
@@ -76,8 +72,9 @@ router.post("/", async (req, res) => {
         res.status(500).json({
             error: "Failed to generate screenshot",
             details: error.message,
-            suggestion:
-                "Make sure Chrome/Chromium is installed and the executablePath is correct",
+            suggestion: process.env.RENDER
+                ? "Ensure Chromium is available at /opt/render/.cache/chromium/chrome"
+                : "Make sure Chrome is installed at default location",
         });
     } finally {
         if (browser) {

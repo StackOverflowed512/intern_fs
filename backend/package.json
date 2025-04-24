@@ -1,7 +1,7 @@
 {
-    "name": "infographic-screenshot-backend",
+    "name": "climate-infographic-backend",
     "version": "1.0.0",
-    "description": "Backend for infographic screenshot generator",
+    "description": "Backend for climate infographic screenshot generation",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
